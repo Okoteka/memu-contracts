@@ -51,12 +51,11 @@ publish_module:
   stage: publish
   needs: ["generate"]
   script:
-    - cat /etc/hosts
     - cd gen
     - export GOPROXY="${GOPROXY_URL}"
     - export GONOSUMDB="g.nas.loc"
     
-    -  go mod download
+    - go mod download
   artifacts:
     paths:
       - gen/go.mod
