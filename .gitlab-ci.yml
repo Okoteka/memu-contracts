@@ -7,6 +7,10 @@ variables:
   
   GOPROXY_URL: "https://${CI_JOB_TOKEN}@g.nas.loc/api/v4/projects/${CI_PROJECT_ID}/packages/go"
 
+before_script:
+  - mkdir -p ~/.docker
+  - echo "$DOCKER_AUTH_CONFIG" > ~/.docker/config.json
+
 stages:
   - provision
   - publish
