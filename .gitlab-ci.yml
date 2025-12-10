@@ -26,6 +26,8 @@ lint:
     expire_in: 1 week
   except:
     - tags
+  tags:
+    - runner-docker
 
 generate:
   stage: provision
@@ -37,12 +39,16 @@ generate:
     paths:
       - gen/
     expire_in: 1 week
+  tags:
+    - runner-docker
 
 test:
   stage: provision
   needs: ["generate"]
   script:
     - task test
+  tags:
+    - runner-docker
 
 publish_module:
   stage: publish
@@ -64,6 +70,8 @@ publish_module:
     - master
   except:
     - branches
+  tags:
+    - runner-docker
 
 clean:
   stage: .pre
@@ -73,3 +81,5 @@ clean:
     - echo "Clean finished successfully"
   when: manual
   allow_failure: true
+  tags:
+    - runner-docker
