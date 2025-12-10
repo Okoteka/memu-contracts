@@ -1,0 +1,19 @@
+version: '3'
+
+tasks:     
+  generate-mod-file:
+    desc: "Create mod file"
+    dir: gen
+    cmds:
+      - rm -rf go.mod
+      - go mod init g.nas.loc/Okoteka/memu-contracts
+      - go mod edit -go=1.24
+      - go get google.golang.org/grpc@v1.70.0
+      - go get google.golang.org/protobuf@v1.36.10
+      - go mod tidy 2>&1 | grep -v "downloading" || true
+
+  test:
+    desc: "Test generated module"
+    dir: test
+    cmds:
+      - go test -v ./...

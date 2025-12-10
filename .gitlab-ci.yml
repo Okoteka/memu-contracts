@@ -1,0 +1,75 @@
+image: $CI_REGISTRY/okoteka/protoc-builder:latest
+
+variables:
+  VERSION: ${CI_COMMIT_TAG:-v0.0.0-${CI_COMMIT_SHORT_SHA}}
+  
+  GO_MODULE: "g.nas.loc/Okoteka/memu-contracts"
+  
+  GOPROXY_URL: "https://${CI_JOB_TOKEN}@g.nas.loc/api/v4/projects/${CI_PROJECT_ID}/packages/go"
+
+stages:
+  - provision
+  - publish
+
+lint:
+  stage: provision
+  script:
+    buf lint
+    - |
+      if [ "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME" != "" ]; then
+        buf breaking --against ".git#branch=${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}"
+      fi
+  artifacts:
+    when: always
+    paths:
+      - buf-lint-report.log
+    expire_in: 1 week
+  except:
+    - tags
+
+generate:
+  stage: provision
+  needs: ["lint"]
+  script:
+    - buf generate
+    - task generate-mod-file
+  artifacts:
+    paths:
+      - gen/
+    expire_in: 1 week
+
+test:
+  stage: provision
+  needs: ["generate"]
+  script:
+    - task test
+
+publish_module:
+  stage: publish
+  needs: ["test"]
+  script:
+    - echo "Publish ${GO_MODULE}@${VERSION}..."
+    - cd gen
+    - export GOPROXY="${GOPROXY_URL}"
+    - export GONOSUMDB="g.nas.loc"
+    
+    -  go mod download
+  artifacts:
+    paths:
+      - gen/go.mod
+    reports:
+      dotenv: publish.env
+  only:
+    - tags
+    - master
+  except:
+    - branches
+
+clean:
+  stage: .pre
+  script:
+    - echo "Clean artifacts"
+    - rm -rf gen/
+    - echo "Clean finished successfully"
+  when: manual
+  allow_failure: true

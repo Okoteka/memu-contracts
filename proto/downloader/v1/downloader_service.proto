@@ -5,27 +5,27 @@ package downloader.v1;
 option go_package = "g.nas.loc/Okoteka/memu-contracts/gen/downloader/v1";
 
 service DownloaderService {
-  rpc Download(DownloadRequest) returns (stream DownloadResponse);
+	rpc Download(DownloadRequest) returns (stream DownloadResponse);
 }
 
 message DownloadRequest {
-  string url = 1;
+	string url = 1;
 }
 
 message DownloadResponse {
-  enum Status {
-    STATUS_UNKNOWN_UNSPECIFIED = 0;
-    STATUS_PROGRESS = 1;
-    STATUS_DONE = 2;
-    STATUS_ERROR = 3;
-  }
+	enum Status {
+		STATUS_UNKNOWN_UNSPECIFIED = 0;
+		STATUS_PROGRESS = 1;
+		STATUS_DONE = 2;
+		STATUS_ERROR = 3;
+	}
 
-  Status status = 1;
+	Status status = 1;
 
-  int32 progress_percent = 2;
+	int32 progress_percent = 2;
 
-  bytes file = 3;
-  string filename = 4;
+	bytes file = 3;
+	string filename = 4;
 
-  string error_message = 5;
+	string error_message = 5;
 }
