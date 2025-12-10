@@ -18,8 +18,8 @@ stages:
 lint:
   stage: provision
   script:
-    buf lint
     - |
+      buf lint
       if [ "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME" != "" ]; then
         buf breaking --against ".git#branch=${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}"
       fi
