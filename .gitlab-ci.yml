@@ -49,7 +49,7 @@ test:
 
 publish_module:
   stage: publish
-  needs: ["test"]
+  needs: ["generate"]
   script:
     - echo "Publish ${GO_MODULE}@${VERSION}..."
     - cd gen
