@@ -51,7 +51,7 @@ publish_module:
   stage: publish
   needs: ["generate"]
   script:
-    - echo "Publish ${GO_MODULE}@${VERSION}..."
+    - cat /etc/hosts
     - cd gen
     - export GOPROXY="${GOPROXY_URL}"
     - export GONOSUMDB="g.nas.loc"
