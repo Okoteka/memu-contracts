@@ -35,6 +35,6 @@ check-test:
   stage: test
   needs: ["check-lint"]
   script:
-    - go test -v ./...
+    - cd test && go test -v ./...
   tags:
     - runner-docker
