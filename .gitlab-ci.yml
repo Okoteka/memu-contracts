@@ -1,81 +1,37 @@
 image: $CI_REGISTRY/okoteka/protobuf-builder:latest
 
-variables:
-  VERSION: ${CI_COMMIT_TAG:-v0.0.0-${CI_COMMIT_SHORT_SHA}}
-  
-  GO_MODULE: "g.nas.loc/Okoteka/memu-contracts"
-  
-  GOPROXY_URL: "https://${CI_JOB_TOKEN}@g.nas.loc/api/v4/projects/${CI_PROJECT_ID}/packages/go"
-
 before_script:
   - mkdir -p ~/.docker
   - echo "$DOCKER_AUTH_CONFIG" > ~/.docker/config.json
 
 stages:
-  - provision
-  - publish
+  - test
 
-lint:
-  stage: provision
+check-generate:
+  stage: test
   script:
+    - [ -d gen ] || (echo "gen/ folder does not exist" && exit 1)
+    - buf generate
+    - git diff --exit-code gen/ || (echo "Generated code differs from committed gen/" && exit 1)
     - |
-      buf lint
       if [ "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME" != "" ]; then
         buf breaking --against ".git#branch=${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}"
       fi
   tags:
     - runner-docker
+  
+check-lint:
+  stage: test
+  needs: ["check-generate"]
+  script:
+    - buf lint
+  tags:
+    - runner-docker
 
-generate:
+check-test:
   stage: provision
-  needs: ["lint"]
+  needs: ["check-lint"]
   script:
-    - buf generate
-    - task generate-mod-file
-  artifacts:
-    paths:
-      - gen/
-    expire_in: 1 week
-  tags:
-    - runner-docker
-
-test:
-  stage: provision
-  needs: ["generate"]
-  script:
-    - task test
-  tags:
-    - runner-docker
-
-publish_module:
-  stage: publish
-  needs: ["generate"]
-  script:
-    - cd gen
-    - export GOPROXY="${GOPROXY_URL}"
-    - export GONOSUMDB="g.nas.loc"
-    
-    - go mod download
-  artifacts:
-    paths:
-      - gen/go.mod
-    reports:
-      dotenv: publish.env
-  only:
-    - tags
-    - master
-  except:
-    - branches
-  tags:
-    - runner-docker
-
-clean:
-  stage: .pre
-  script:
-    - echo "Clean artifacts"
-    - rm -rf gen/
-    - echo "Clean finished successfully"
-  when: manual
-  allow_failure: true
+    - go test -v ./...
   tags:
     - runner-docker
