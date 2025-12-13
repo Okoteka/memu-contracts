@@ -4,7 +4,7 @@
 // - protoc             (unknown)
 // source: downloader/v1/downloader_service.proto
 
-package v1
+package downloader
 
 import (
 	context "context"

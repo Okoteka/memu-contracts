@@ -1,11 +1,7 @@
-// test/test_import.go
-// Этот файл проверяет что сгенерированный код можно импортировать
-// Он НЕ генерируется в CI, а лежит в репозитории
-
 package test
 
 import (
-	downloader "g.nas.loc/Okoteka/memu-contracts/downloader/v1"
+	"g.nas.loc/Okoteka/memu-contracts/downloader/v1"
 	"os"
 	"os/exec"
 	"testing"
@@ -13,8 +9,8 @@ import (
 
 func TestProtoFilesExist(t *testing.T) {
 	files := []string{
-		"../gen/downloader/v1/downloader_service.pb.go",
-		"../gen/downloader/v1/downloader_service_grpc.pb.go",
+		"../gen/go/downloader/v1/downloader_service.pb.go",
+		"../gen/go/downloader/v1/downloader_service_grpc.pb.go",
 	}
 
 	for _, file := range files {
@@ -33,7 +29,7 @@ func TestTypesDefined(t *testing.T) {
 
 func TestGoBuildSucceeds(t *testing.T) {
 	cmd := exec.Command("go", "build", "./...")
-	cmd.Dir = "../gen"
+	cmd.Dir = "../gen/go"
 
 	if output, err := cmd.CombinedOutput(); err != nil {
 		t.Errorf("Compilation fail:\n%s", output)

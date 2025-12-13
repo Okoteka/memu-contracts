@@ -1,1 +1,4 @@
 .task
+gen/go/go.sum
+gen/go/go.mod
+

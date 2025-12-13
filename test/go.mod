@@ -2,7 +2,7 @@ module memu-contracts-test
 
 go 1.24
 
-replace g.nas.loc/Okoteka/memu-contracts => ../gen
+replace g.nas.loc/Okoteka/memu-contracts => ../gen/go
 
 require g.nas.loc/Okoteka/memu-contracts v0.0.0
 
