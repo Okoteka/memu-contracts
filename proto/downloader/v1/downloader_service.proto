@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package downloader.v1;
 
-option go_package = "g.nas.loc/Okoteka/memu-contracts/gen/downloader/v1;downloader";
+option go_package = "g.nas.loc/Okoteka/memu-contracts/gen/downloader/v1";
 
 service DownloaderService {
 	rpc Download(DownloadRequest) returns (stream DownloadResponse);
