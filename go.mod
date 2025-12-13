@@ -1,3 +1,3 @@
-module g.nas.loc/okoteka/memu-contracts
+module g.nas.loc/Okoteka/memu-contracts
 
 go 1.24
