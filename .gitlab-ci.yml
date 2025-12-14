@@ -50,6 +50,11 @@ release-tag:
       when: manual
   script:
     - |
+      if [ -z "$RELEASE_VERSION" ]; then
+        echo "RELEASE_VERSION is not set"
+        exit 1
+      fi
+
       if git rev-parse "v$RELEASE_VERSION" >/dev/null 2>&1; then
         echo "Tag v$RELEASE_VERSION already exists"
         exit 1
