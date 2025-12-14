@@ -8,7 +8,7 @@ stages:
   - test
   - release
 
-check-generate:
+check_generate:
   stage: test
   script:
     - |
@@ -25,17 +25,19 @@ check-generate:
   tags:
     - runner-docker
   
-check-lint:
+check_lint:
   stage: test
-  needs: ["check-generate"]
+  needs:
+    - check_generate
   script:
     - buf lint
   tags:
     - runner-docker
 
-check-test:
+check_test:
   stage: test
-  needs: ["check-lint"]
+  needs:
+    - check_lint
   script:
     - go test -v ./...
   tags:
@@ -44,7 +46,7 @@ check-test:
 release-tag:
   stage: release
   needs:
-    - check-test
+    - check_test
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
       when: manual
@@ -54,8 +56,7 @@ release-tag:
         echo "RELEASE_VERSION is not set"
         exit 1
       fi
-      git show-ref --tags
-      echo "$RELEASE_VERSION"
+
       if git show-ref --tags | grep -q "refs/tags/v$RELEASE_VERSION"; then
         echo "Tag v$RELEASE_VERSION already exists"
         exit 1
