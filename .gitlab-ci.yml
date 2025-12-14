@@ -46,7 +46,7 @@ release-tag:
   needs:
     - check-test
   rules:
-    - if: '$CI_COMMIT_BRANCH == "master"
+    - if: $CI_COMMIT_BRANCH == "master"
       when: manual
   script:
     - |
