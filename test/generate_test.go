@@ -1,7 +1,7 @@
 package test
 
 import (
-	"g.nas.loc/Okoteka/memu-contracts/downloader/v1"
+	"g.nas.loc/Okoteka/memu-contracts/gen/go/downloader/v1"
 	"os"
 	"os/exec"
 	"testing"
