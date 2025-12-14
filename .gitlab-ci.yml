@@ -57,6 +57,15 @@ release-tag:
         exit 1
       fi
 
+      # remove local ghost tags
+      git tag -l | xargs -r git tag -d
+      
+      git fetch --prune --tags
+      if git ls-remote --tags origin | grep -q "refs/tags/v$RELEASE_VERSION"; then
+        echo "Tag v$RELEASE_VERSION already exists on remote"
+        exit 1
+      fi
+      
       git remote set-url origin https://oauth2:${RELEASE_TAG_TOKEN}@${CI_PROJECT_URL#https://}
 
       git tag "v$RELEASE_VERSION"
