@@ -21,10 +21,10 @@ func TestProtoFilesExist(t *testing.T) {
 }
 
 func TestTypesDefined(t *testing.T) {
-	var _ downloader.DownloadRequest
-	var _ downloader.DownloadResponse
-	var _ downloader.DownloaderServiceServer
-	var _ downloader.DownloaderServiceClient
+	var _ downloaderv1.DownloadRequest
+	var _ downloaderv1.DownloadResponse
+	var _ downloaderv1.DownloaderServiceServer
+	var _ downloaderv1.DownloaderServiceClient
 }
 
 func TestGoBuildSucceeds(t *testing.T) {
@@ -37,7 +37,7 @@ func TestGoBuildSucceeds(t *testing.T) {
 }
 
 func TestTypesFields(t *testing.T) {
-	req := &downloader.DownloadRequest{
+	req := &downloaderv1.DownloadRequest{
 		Url: "https://example.com/file.mp4",
 	}
 
@@ -45,12 +45,12 @@ func TestTypesFields(t *testing.T) {
 		t.Error("Request should have URL field")
 	}
 
-	resp := &downloader.DownloadResponse{
-		Status:          downloader.DownloadResponse_STATUS_PROGRESS,
+	resp := &downloaderv1.DownloadResponse{
+		Status:          downloaderv1.DownloadResponse_STATUS_PROGRESS,
 		ProgressPercent: 50,
 	}
 
-	if resp.Status != downloader.DownloadResponse_STATUS_PROGRESS {
+	if resp.Status != downloaderv1.DownloadResponse_STATUS_PROGRESS {
 		t.Error("Enum value should be accessible")
 	}
 
