@@ -43,7 +43,7 @@ check_test:
   tags:
     - runner-docker
 
-release-tag:
+release_tag:
   stage: release
   needs:
     - check_test
