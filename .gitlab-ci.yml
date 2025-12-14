@@ -6,6 +6,7 @@ before_script:
 
 stages:
   - test
+  - release
 
 check-generate:
   stage: test
@@ -37,5 +38,24 @@ check-test:
   needs: ["check-lint"]
   script:
     - go test -v ./...
+  tags:
+    - runner-docker
+
+release-tag:
+  stage: release
+  needs:
+    - check-test
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"
+      when: manual
+  script:
+    - |
+      if git rev-parse "v$RELEASE_VERSION" >/dev/null 2>&1; then
+        echo "Tag v$RELEASE_VERSION already exists"
+        exit 1
+      fi
+
+      git tag "v$RELEASE_VERSION"
+      git push origin "v$RELEASE_VERSION"
   tags:
     - runner-docker
