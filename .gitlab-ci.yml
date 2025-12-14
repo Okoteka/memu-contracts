@@ -54,7 +54,7 @@ release-tag:
         echo "RELEASE_VERSION is not set"
         exit 1
       fi
-
+      git show-ref --tags
       if git show-ref --tags | grep -q "refs/tags/v$RELEASE_VERSION"; then
         echo "Tag v$RELEASE_VERSION already exists"
         exit 1
