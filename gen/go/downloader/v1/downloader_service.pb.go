@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: downloader/v1/downloader_service.proto
 
-package downloader
+package v1
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -212,7 +212,7 @@ const file_downloader_v1_downloader_service_proto_rawDesc = "" +
 	"\vSTATUS_DONE\x10\x02\x12\x10\n" +
 	"\fSTATUS_ERROR\x10\x032b\n" +
 	"\x11DownloaderService\x12M\n" +
-	"\bDownload\x12\x1e.downloader.v1.DownloadRequest\x1a\x1f.downloader.v1.DownloadResponse0\x01B?Z=g.nas.loc/Okoteka/memu-contracts/gen/downloader/v1;downloaderb\x06proto3"
+	"\bDownload\x12\x1e.downloader.v1.DownloadRequest\x1a\x1f.downloader.v1.DownloadResponse0\x01B4Z2g.nas.loc/Okoteka/memu-contracts/gen/downloader/v1b\x06proto3"
 
 var (
 	file_downloader_v1_downloader_service_proto_rawDescOnce sync.Once
