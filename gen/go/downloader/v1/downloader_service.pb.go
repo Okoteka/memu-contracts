@@ -120,7 +120,7 @@ func (x *DownloadRequest) GetUrl() string {
 type DownloadResponse struct {
 	state           protoimpl.MessageState  `protogen:"open.v1"`
 	Status          DownloadResponse_Status `protobuf:"varint,1,opt,name=status,proto3,enum=downloader.v1.DownloadResponse_Status" json:"status,omitempty"`
-	ProgressPercent int32                   `protobuf:"varint,2,opt,name=progress_percent,json=progressPercent,proto3" json:"progress_percent,omitempty"`
+	ProgressPercent float64                 `protobuf:"fixed64,2,opt,name=progress_percent,json=progressPercent,proto3" json:"progress_percent,omitempty"`
 	File            []byte                  `protobuf:"bytes,3,opt,name=file,proto3" json:"file,omitempty"`
 	Filename        string                  `protobuf:"bytes,4,opt,name=filename,proto3" json:"filename,omitempty"`
 	ErrorMessage    string                  `protobuf:"bytes,5,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
@@ -165,7 +165,7 @@ func (x *DownloadResponse) GetStatus() DownloadResponse_Status {
 	return DownloadResponse_STATUS_UNKNOWN_UNSPECIFIED
 }
 
-func (x *DownloadResponse) GetProgressPercent() int32 {
+func (x *DownloadResponse) GetProgressPercent() float64 {
 	if x != nil {
 		return x.ProgressPercent
 	}
@@ -202,7 +202,7 @@ const file_downloader_v1_downloader_service_proto_rawDesc = "" +
 	"\x03url\x18\x01 \x01(\tR\x03url\"\xb4\x02\n" +
 	"\x10DownloadResponse\x12>\n" +
 	"\x06status\x18\x01 \x01(\x0e2&.downloader.v1.DownloadResponse.StatusR\x06status\x12)\n" +
-	"\x10progress_percent\x18\x02 \x01(\x05R\x0fprogressPercent\x12\x12\n" +
+	"\x10progress_percent\x18\x02 \x01(\x01R\x0fprogressPercent\x12\x12\n" +
 	"\x04file\x18\x03 \x01(\fR\x04file\x12\x1a\n" +
 	"\bfilename\x18\x04 \x01(\tR\bfilename\x12#\n" +
 	"\rerror_message\x18\x05 \x01(\tR\ferrorMessage\"`\n" +

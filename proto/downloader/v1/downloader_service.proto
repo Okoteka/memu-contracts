@@ -22,7 +22,7 @@ message DownloadResponse {
 
 	Status status = 1;
 
-	int32 progress_percent = 2;
+	double progress_percent = 2;
 
 	bytes file = 3;
 	string filename = 4;
