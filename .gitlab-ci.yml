@@ -1,4 +1,4 @@
-image: $CI_REGISTRY/okoteka/protobuf-builder:latest
+image: $CI_REGISTRY/internal-images/protobuf:latest
 
 before_script:
   - mkdir -p ~/.docker
