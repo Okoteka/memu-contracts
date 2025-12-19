@@ -1,4 +1,4 @@
-iamge: $CI_REGISTRY/okoteka/internal-images/protobuf:latest
+image: $CI_REGISTRY/okoteka/internal-images/protobuf:latest
 
 before_script:
   - mkdir -p ~/.docker
