@@ -28,14 +28,8 @@ message Task {
 
 	int32 progress_percent = 9;
 
-	string file_path = 10;
-	string file_name = 11;
-
-	int32 duration_sec = 12;
-	int64 size_bytes = 13;
-
-	string error_message = 14;
-	int32 attempt = 15;
+	string error_message = 10;
+	int32 attempt = 11;
 }
 
 message CreateTaskRequest {
