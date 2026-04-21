@@ -30,10 +30,10 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TaskServiceClient interface {
-	CreateTask(ctx context.Context, in *CreateTaskRequest, opts ...grpc.CallOption) (*Task, error)
-	UpdateTaskStatus(ctx context.Context, in *UpdateTaskStatusRequest, opts ...grpc.CallOption) (*Task, error)
-	UpdateTaskProgress(ctx context.Context, in *UpdateTaskProgressRequest, opts ...grpc.CallOption) (*Task, error)
-	GetTask(ctx context.Context, in *GetTaskRequest, opts ...grpc.CallOption) (*Task, error)
+	CreateTask(ctx context.Context, in *CreateTaskRequest, opts ...grpc.CallOption) (*CreateTaskResponse, error)
+	UpdateTaskStatus(ctx context.Context, in *UpdateTaskStatusRequest, opts ...grpc.CallOption) (*UpdateTaskStatusResponse, error)
+	UpdateTaskProgress(ctx context.Context, in *UpdateTaskProgressRequest, opts ...grpc.CallOption) (*UpdateTaskProgressResponse, error)
+	GetTask(ctx context.Context, in *GetTaskRequest, opts ...grpc.CallOption) (*GetTaskResponse, error)
 	ListTasksByChat(ctx context.Context, in *ListTasksByChatRequest, opts ...grpc.CallOption) (*ListTasksByChatResponse, error)
 }
 
@@ -45,9 +45,9 @@ func NewTaskServiceClient(cc grpc.ClientConnInterface) TaskServiceClient {
 	return &taskServiceClient{cc}
 }
 
-func (c *taskServiceClient) CreateTask(ctx context.Context, in *CreateTaskRequest, opts ...grpc.CallOption) (*Task, error) {
+func (c *taskServiceClient) CreateTask(ctx context.Context, in *CreateTaskRequest, opts ...grpc.CallOption) (*CreateTaskResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Task)
+	out := new(CreateTaskResponse)
 	err := c.cc.Invoke(ctx, TaskService_CreateTask_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -55,9 +55,9 @@ func (c *taskServiceClient) CreateTask(ctx context.Context, in *CreateTaskReques
 	return out, nil
 }
 
-func (c *taskServiceClient) UpdateTaskStatus(ctx context.Context, in *UpdateTaskStatusRequest, opts ...grpc.CallOption) (*Task, error) {
+func (c *taskServiceClient) UpdateTaskStatus(ctx context.Context, in *UpdateTaskStatusRequest, opts ...grpc.CallOption) (*UpdateTaskStatusResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Task)
+	out := new(UpdateTaskStatusResponse)
 	err := c.cc.Invoke(ctx, TaskService_UpdateTaskStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -65,9 +65,9 @@ func (c *taskServiceClient) UpdateTaskStatus(ctx context.Context, in *UpdateTask
 	return out, nil
 }
 
-func (c *taskServiceClient) UpdateTaskProgress(ctx context.Context, in *UpdateTaskProgressRequest, opts ...grpc.CallOption) (*Task, error) {
+func (c *taskServiceClient) UpdateTaskProgress(ctx context.Context, in *UpdateTaskProgressRequest, opts ...grpc.CallOption) (*UpdateTaskProgressResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Task)
+	out := new(UpdateTaskProgressResponse)
 	err := c.cc.Invoke(ctx, TaskService_UpdateTaskProgress_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -75,9 +75,9 @@ func (c *taskServiceClient) UpdateTaskProgress(ctx context.Context, in *UpdateTa
 	return out, nil
 }
 
-func (c *taskServiceClient) GetTask(ctx context.Context, in *GetTaskRequest, opts ...grpc.CallOption) (*Task, error) {
+func (c *taskServiceClient) GetTask(ctx context.Context, in *GetTaskRequest, opts ...grpc.CallOption) (*GetTaskResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Task)
+	out := new(GetTaskResponse)
 	err := c.cc.Invoke(ctx, TaskService_GetTask_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -99,10 +99,10 @@ func (c *taskServiceClient) ListTasksByChat(ctx context.Context, in *ListTasksBy
 // All implementations should embed UnimplementedTaskServiceServer
 // for forward compatibility.
 type TaskServiceServer interface {
-	CreateTask(context.Context, *CreateTaskRequest) (*Task, error)
-	UpdateTaskStatus(context.Context, *UpdateTaskStatusRequest) (*Task, error)
-	UpdateTaskProgress(context.Context, *UpdateTaskProgressRequest) (*Task, error)
-	GetTask(context.Context, *GetTaskRequest) (*Task, error)
+	CreateTask(context.Context, *CreateTaskRequest) (*CreateTaskResponse, error)
+	UpdateTaskStatus(context.Context, *UpdateTaskStatusRequest) (*UpdateTaskStatusResponse, error)
+	UpdateTaskProgress(context.Context, *UpdateTaskProgressRequest) (*UpdateTaskProgressResponse, error)
+	GetTask(context.Context, *GetTaskRequest) (*GetTaskResponse, error)
 	ListTasksByChat(context.Context, *ListTasksByChatRequest) (*ListTasksByChatResponse, error)
 }
 
@@ -113,16 +113,16 @@ type TaskServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedTaskServiceServer struct{}
 
-func (UnimplementedTaskServiceServer) CreateTask(context.Context, *CreateTaskRequest) (*Task, error) {
+func (UnimplementedTaskServiceServer) CreateTask(context.Context, *CreateTaskRequest) (*CreateTaskResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreateTask not implemented")
 }
-func (UnimplementedTaskServiceServer) UpdateTaskStatus(context.Context, *UpdateTaskStatusRequest) (*Task, error) {
+func (UnimplementedTaskServiceServer) UpdateTaskStatus(context.Context, *UpdateTaskStatusRequest) (*UpdateTaskStatusResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method UpdateTaskStatus not implemented")
 }
-func (UnimplementedTaskServiceServer) UpdateTaskProgress(context.Context, *UpdateTaskProgressRequest) (*Task, error) {
+func (UnimplementedTaskServiceServer) UpdateTaskProgress(context.Context, *UpdateTaskProgressRequest) (*UpdateTaskProgressResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method UpdateTaskProgress not implemented")
 }
-func (UnimplementedTaskServiceServer) GetTask(context.Context, *GetTaskRequest) (*Task, error) {
+func (UnimplementedTaskServiceServer) GetTask(context.Context, *GetTaskRequest) (*GetTaskResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetTask not implemented")
 }
 func (UnimplementedTaskServiceServer) ListTasksByChat(context.Context, *ListTasksByChatRequest) (*ListTasksByChatResponse, error) {
