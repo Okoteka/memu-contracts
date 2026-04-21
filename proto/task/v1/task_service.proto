@@ -37,9 +37,17 @@ message CreateTaskRequest {
 	string url = 2;
 }
 
+message CreateTaskResponse {
+	Task task = 1;
+}
+
 message UpdateTaskStatusRequest {
 	string task_id = 1;
 	TaskStatus status = 2;
+}
+
+message UpdateTaskStatusResponse {
+	Task task = 1;
 }
 
 message UpdateTaskProgressRequest {
@@ -47,8 +55,16 @@ message UpdateTaskProgressRequest {
 	int32 progress_percent = 2;
 }
 
+message UpdateTaskProgressResponse {
+	Task task = 1;
+}
+
 message GetTaskRequest {
 	string task_id = 1;
+}
+
+message GetTaskResponse {
+	Task task = 1;
 }
 
 message ListTasksByChatRequest {
@@ -59,12 +75,11 @@ message ListTasksByChatResponse {
 	repeated Task tasks = 1;
 }
 
-
 service TaskService {
-	rpc CreateTask(CreateTaskRequest) returns (Task);
-	rpc UpdateTaskStatus(UpdateTaskStatusRequest) returns (Task);
-	rpc UpdateTaskProgress(UpdateTaskProgressRequest) returns (Task);
+	rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse);
+	rpc UpdateTaskStatus(UpdateTaskStatusRequest) returns (UpdateTaskStatusResponse);
+	rpc UpdateTaskProgress(UpdateTaskProgressRequest) returns (UpdateTaskProgressResponse);
 
-	rpc GetTask(GetTaskRequest) returns (Task);
+	rpc GetTask(GetTaskRequest) returns (GetTaskResponse);
 	rpc ListTasksByChat(ListTasksByChatRequest) returns (ListTasksByChatResponse);
 }
