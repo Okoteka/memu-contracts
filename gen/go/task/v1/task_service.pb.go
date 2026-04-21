@@ -88,12 +88,8 @@ type Task struct {
 	UpdatedAt       *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	FinishedAt      *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=finished_at,json=finishedAt,proto3" json:"finished_at,omitempty"`
 	ProgressPercent int32                  `protobuf:"varint,9,opt,name=progress_percent,json=progressPercent,proto3" json:"progress_percent,omitempty"`
-	FilePath        string                 `protobuf:"bytes,10,opt,name=file_path,json=filePath,proto3" json:"file_path,omitempty"`
-	FileName        string                 `protobuf:"bytes,11,opt,name=file_name,json=fileName,proto3" json:"file_name,omitempty"`
-	DurationSec     int32                  `protobuf:"varint,12,opt,name=duration_sec,json=durationSec,proto3" json:"duration_sec,omitempty"`
-	SizeBytes       int64                  `protobuf:"varint,13,opt,name=size_bytes,json=sizeBytes,proto3" json:"size_bytes,omitempty"`
-	ErrorMessage    string                 `protobuf:"bytes,14,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
-	Attempt         int32                  `protobuf:"varint,15,opt,name=attempt,proto3" json:"attempt,omitempty"`
+	ErrorMessage    string                 `protobuf:"bytes,10,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
+	Attempt         int32                  `protobuf:"varint,11,opt,name=attempt,proto3" json:"attempt,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -187,34 +183,6 @@ func (x *Task) GetFinishedAt() *timestamppb.Timestamp {
 func (x *Task) GetProgressPercent() int32 {
 	if x != nil {
 		return x.ProgressPercent
-	}
-	return 0
-}
-
-func (x *Task) GetFilePath() string {
-	if x != nil {
-		return x.FilePath
-	}
-	return ""
-}
-
-func (x *Task) GetFileName() string {
-	if x != nil {
-		return x.FileName
-	}
-	return ""
-}
-
-func (x *Task) GetDurationSec() int32 {
-	if x != nil {
-		return x.DurationSec
-	}
-	return 0
-}
-
-func (x *Task) GetSizeBytes() int64 {
-	if x != nil {
-		return x.SizeBytes
 	}
 	return 0
 }
@@ -525,7 +493,7 @@ var File_task_v1_task_service_proto protoreflect.FileDescriptor
 
 const file_task_v1_task_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1atask/v1/task_service.proto\x12\atask.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xcb\x04\n" +
+	"\x1atask/v1/task_service.proto\x12\atask.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xcf\x03\n" +
 	"\x04Task\x12\x17\n" +
 	"\atask_id\x18\x01 \x01(\tR\x06taskId\x12\x17\n" +
 	"\achat_id\x18\x02 \x01(\x03R\x06chatId\x12\x10\n" +
@@ -539,15 +507,10 @@ const file_task_v1_task_service_proto_rawDesc = "" +
 	"updated_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12;\n" +
 	"\vfinished_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"finishedAt\x12)\n" +
-	"\x10progress_percent\x18\t \x01(\x05R\x0fprogressPercent\x12\x1b\n" +
-	"\tfile_path\x18\n" +
-	" \x01(\tR\bfilePath\x12\x1b\n" +
-	"\tfile_name\x18\v \x01(\tR\bfileName\x12!\n" +
-	"\fduration_sec\x18\f \x01(\x05R\vdurationSec\x12\x1d\n" +
-	"\n" +
-	"size_bytes\x18\r \x01(\x03R\tsizeBytes\x12#\n" +
-	"\rerror_message\x18\x0e \x01(\tR\ferrorMessage\x12\x18\n" +
-	"\aattempt\x18\x0f \x01(\x05R\aattempt\">\n" +
+	"\x10progress_percent\x18\t \x01(\x05R\x0fprogressPercent\x12#\n" +
+	"\rerror_message\x18\n" +
+	" \x01(\tR\ferrorMessage\x12\x18\n" +
+	"\aattempt\x18\v \x01(\x05R\aattempt\">\n" +
 	"\x11CreateTaskRequest\x12\x17\n" +
 	"\achat_id\x18\x01 \x01(\x03R\x06chatId\x12\x10\n" +
 	"\x03url\x18\x02 \x01(\tR\x03url\"_\n" +
