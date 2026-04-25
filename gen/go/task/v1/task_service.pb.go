@@ -81,15 +81,16 @@ type Task struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	TaskId          string                 `protobuf:"bytes,1,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
 	ChatId          int64                  `protobuf:"varint,2,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
-	Url             string                 `protobuf:"bytes,3,opt,name=url,proto3" json:"url,omitempty"`
-	Status          TaskStatus             `protobuf:"varint,4,opt,name=status,proto3,enum=task.v1.TaskStatus" json:"status,omitempty"`
-	CreatedAt       *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	StartedAt       *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=started_at,json=startedAt,proto3" json:"started_at,omitempty"`
-	UpdatedAt       *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	FinishedAt      *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=finished_at,json=finishedAt,proto3" json:"finished_at,omitempty"`
-	ProgressPercent int32                  `protobuf:"varint,9,opt,name=progress_percent,json=progressPercent,proto3" json:"progress_percent,omitempty"`
-	ErrorMessage    string                 `protobuf:"bytes,10,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
-	Attempt         int32                  `protobuf:"varint,11,opt,name=attempt,proto3" json:"attempt,omitempty"`
+	UserId          int64                  `protobuf:"varint,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Url             string                 `protobuf:"bytes,4,opt,name=url,proto3" json:"url,omitempty"`
+	Status          TaskStatus             `protobuf:"varint,5,opt,name=status,proto3,enum=task.v1.TaskStatus" json:"status,omitempty"`
+	CreatedAt       *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	StartedAt       *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=started_at,json=startedAt,proto3" json:"started_at,omitempty"`
+	UpdatedAt       *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	FinishedAt      *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=finished_at,json=finishedAt,proto3" json:"finished_at,omitempty"`
+	ProgressPercent int32                  `protobuf:"varint,10,opt,name=progress_percent,json=progressPercent,proto3" json:"progress_percent,omitempty"`
+	ErrorMessage    string                 `protobuf:"bytes,11,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
+	Attempt         int32                  `protobuf:"varint,12,opt,name=attempt,proto3" json:"attempt,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -134,6 +135,13 @@ func (x *Task) GetTaskId() string {
 func (x *Task) GetChatId() int64 {
 	if x != nil {
 		return x.ChatId
+	}
+	return 0
+}
+
+func (x *Task) GetUserId() int64 {
+	if x != nil {
+		return x.UserId
 	}
 	return 0
 }
@@ -204,7 +212,8 @@ func (x *Task) GetAttempt() int32 {
 type CreateTaskRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ChatId        int64                  `protobuf:"varint,1,opt,name=chat_id,json=chatId,proto3" json:"chat_id,omitempty"`
-	Url           string                 `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
+	UserId        int64                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Url           string                 `protobuf:"bytes,3,opt,name=url,proto3" json:"url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -242,6 +251,13 @@ func (*CreateTaskRequest) Descriptor() ([]byte, []int) {
 func (x *CreateTaskRequest) GetChatId() int64 {
 	if x != nil {
 		return x.ChatId
+	}
+	return 0
+}
+
+func (x *CreateTaskRequest) GetUserId() int64 {
+	if x != nil {
+		return x.UserId
 	}
 	return 0
 }
@@ -669,27 +685,29 @@ var File_task_v1_task_service_proto protoreflect.FileDescriptor
 
 const file_task_v1_task_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1atask/v1/task_service.proto\x12\atask.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xcf\x03\n" +
+	"\x1atask/v1/task_service.proto\x12\atask.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe8\x03\n" +
 	"\x04Task\x12\x17\n" +
 	"\atask_id\x18\x01 \x01(\tR\x06taskId\x12\x17\n" +
-	"\achat_id\x18\x02 \x01(\x03R\x06chatId\x12\x10\n" +
-	"\x03url\x18\x03 \x01(\tR\x03url\x12+\n" +
-	"\x06status\x18\x04 \x01(\x0e2\x13.task.v1.TaskStatusR\x06status\x129\n" +
+	"\achat_id\x18\x02 \x01(\x03R\x06chatId\x12\x17\n" +
+	"\auser_id\x18\x03 \x01(\x03R\x06userId\x12\x10\n" +
+	"\x03url\x18\x04 \x01(\tR\x03url\x12+\n" +
+	"\x06status\x18\x05 \x01(\x0e2\x13.task.v1.TaskStatusR\x06status\x129\n" +
 	"\n" +
-	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"started_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tstartedAt\x129\n" +
+	"started_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tstartedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12;\n" +
-	"\vfinished_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"updated_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12;\n" +
+	"\vfinished_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"finishedAt\x12)\n" +
-	"\x10progress_percent\x18\t \x01(\x05R\x0fprogressPercent\x12#\n" +
-	"\rerror_message\x18\n" +
-	" \x01(\tR\ferrorMessage\x12\x18\n" +
-	"\aattempt\x18\v \x01(\x05R\aattempt\">\n" +
+	"\x10progress_percent\x18\n" +
+	" \x01(\x05R\x0fprogressPercent\x12#\n" +
+	"\rerror_message\x18\v \x01(\tR\ferrorMessage\x12\x18\n" +
+	"\aattempt\x18\f \x01(\x05R\aattempt\"W\n" +
 	"\x11CreateTaskRequest\x12\x17\n" +
-	"\achat_id\x18\x01 \x01(\x03R\x06chatId\x12\x10\n" +
-	"\x03url\x18\x02 \x01(\tR\x03url\"7\n" +
+	"\achat_id\x18\x01 \x01(\x03R\x06chatId\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\x03R\x06userId\x12\x10\n" +
+	"\x03url\x18\x03 \x01(\tR\x03url\"7\n" +
 	"\x12CreateTaskResponse\x12!\n" +
 	"\x04task\x18\x01 \x01(\v2\r.task.v1.TaskR\x04task\"_\n" +
 	"\x17UpdateTaskStatusRequest\x12\x17\n" +
